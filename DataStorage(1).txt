@@ -1,0 +1,214 @@
+?FOR WHAT? -> To understand how does a computer store its data
+
+一、Binary World
+1.main reasons:
+
+(1)Simple: as "1" represents "True", "0" represents "False", it is logically simple.
+
+(2)Logic
+
+(3)Unambiguous
+
+?WHY DO WE USE BINARY SYSTEM?
+In computer, we use voltage to represent "1" and "0".
+
+For example, suppose we have a wire and we use 5v to mean that it is energized, but the scientific instrument might not be so precise, so it might not be detected exactly as 5v (maybe we detect it as 4.5v), so we tend to believe that the number we should use here is "1" instead of "0".
+
+However, if we use Decimal System, we might regard it as "8" or "9", it is hard for us to know the exact number we should use.
+
+2.Boolean operation & gates
+
+(1)Boolean operation: AND/OR/NOT
+There are 2 inputs, and there are 4 different situations:(0,0),(0,1),(1,0),(1,1).
+
+[1]AND: Only when the inputs are both "1", can it output "True", otherwise, it outputs "False"(0).
+
+[2]OR: Only when the inputs are both "0" can it output "False", otherwise, it outputs "True"(1).
+
+* EXCLUSIVE OR (XOR): The way we use "OR" in our daily life, "A OR B" means we either choose "A" or we choose "B" but not both.
+
+[3]NOT: When the input is "0", it outputs "1"; when the input is "1", it outputs "0".
+
+[4]When we drawing the different images of these Boolean Operations, we can combine some of them in the same image instead of drawing them seperately.
+For example, we can combine the image of "NOT" and "AND" together and we call it "NAND" and so on.
+
+3.?How do we store the data? -- Flip-Flop（正反器）
+(1)Purpose: Store 0/1.
+* 	We got 2 inputs, one of them is set to be "0", the other one is set to be "1".
+	It will preserve 0/1 if no input which means when input is 0.
+For example, suppose we have 2 inputs: x & y through "FF" and 1 output: z. The probable situations are like below:
+
+x   y   	z
+-----------------    |From the beginning, we input x = 0 & y = 1, the output z is 0; (2nd line)
+0   0   unchanged    |Next, we change y into 0 while keep x = 0, and the output z remains 0; (1st line)
+-----------------    |Then, we change x into 1 while keep y = 0, and the output z turns to 1; (3rd line)
+0   1   	0        |Eventually, we change y into 1, and the output z is unknown, undefined. (4th line)
+-----------------    |[The Flip-Flop can remember the status of last point, what it will print depends on the 
+					 |status of last point.] (See "Next" line)
+1   0   	1        |
+-----------------    |
+1   1   undefined    |
+
+Image on the 5th page of file:///D:/YouTubeLessons/IntroductionToComputer/Lesson1_DataStorage/Lesson1_DataStorage.pdf
+
+4.Hexadecimal(Hex)
+(1)Use hexadecimal number to reduce the difficulty of reading.
+
+(2)Reference Table
+Decimal 		Binary 		Hexadecimal
+----------------------------------------
+0			|	0000	|		0
+1 			|	0001	|		1
+2 			|	0010	|		2
+3 			|	0011	|		3
+4 			|	0100	|		4
+5 			|	0101	|		5
+6 			|	0110	|		6
+7 			|	0111	|		7
+8 			|	1000	|		8
+9 			|	1001	|		9
+----------------------------------------
+10 			|	1010	|		A
+11 			|	1011	|		B
+12 			|	1100	|		C
+13 			|	1101	|		D
+14 			|	1110	|		E
+15 			|	1111	|		F
+16 			|	10000	|		10
+
+For example, we got a binary number: 0010111010110101, and we want to transform it to its corresponding hexadecimal number.
+
+1st step: Divide it in to several parts: 0010|1110|1011|0101.
+2nd step: We transform each part of it into a hexadecimal number which is: 2|E|B|5, that means that the binary number in hexadecimal expression is 2EB5.
+
+5.?How to memorize the data? --> Main Memory Cells
+(1)1 Cell == 8 bits == 1 byte
+
+(2)Usually, we regard the left-most digit as the one that carries the most weight.
+
+For example, there is a binary number: 00101110 (8 bits == 1 byte)
+									   ↑	  ↑
+							most significant  least significant
+
+* ?What exactly is the "Memory"?
+It's like you have a series of drawers (the "Memory"), and it is one-dimensional, each of them has a number ("Address"), in each drawer, there puts a "Cell".
+
+For example, drawer 1: 00101110; drawer 2:...; drawer 3:...
+					↑					↑			  ↑
+	should be 00000001 	should be 00000010 			  should be 00000011
+
+* We call this "Random accessible" as you can directly take things out of whichever drawer. It is like the pointer in C/C++. That is to say, "pointer" is like the number I give to the computer to ask it to take out things reserved in the drawser of this number (pointer).
+
+* We also have "Sequential accessible" which is like you listen to Portable Media Player, if you are listening to the first song and you want to listen to the third one, you will have to switch to the second song and then you can switch to the third one.
+
+(3)Memory Techniques
+[1]Random Access Memory (RAM)
+-- Static Memory: like previously mentioned "Flip-Flop". (Disadvantage: The wire framework is too large.)
+
+-- Dynamic Memory: Tiny capacitors replenished regularly by refresh circuit. (Once you stop energizing it, it will start to forget what is in it.)
+
+-- ...(other kinds)
+
+[2]Capacity
+-- 1 Kilobyte == 2^10 bytes == 1024 bytes ≈ 10^3 bytes
+
+-- 1 Megabyte == 2^20 bytes == 1048576 bytes ≈ 10^6 bytes
+
+-- 1 Gigabyte == 2^30 bytes == 1073741824 bytes ≈ 10^9 bytes
+
+(4)Mass Storage
+[1]Properties (compared with main memory)
+-- Larger capacity
+
+-- Less volatility
+
+-- Slower
+
+-- On-line or Off-line
+
+[2]Types
+-- Magnetic systems (hard disk, type)
+
+-- Optical systems (CD, DVD)
+
+-- Flash drives
+
+[3]Magnetic Disk Storage System
+-- Seek Time: This is the time required for Read/write head to get to the tract that stores the infomation you need.
+
+-- Rotation Delay (Latency Time): The amount of time it takes for the desired sector to rotate under the Read/write head of the disk drive.
+
+-- Access Time == Seek Time + Rotation Delay (Latency Time)
+
+[4]Optical Storage
+It is like a magnetic disk without Read/write head.
+
+(5)Physical v.s. Logical Records
+[1] A piece of information is likely to be seperately stored in different tracks. It actually depends on your file system.
+We call this "seperation" as "fragmentation problem".
+
+?Since we have to read a whole file instead of a sector from the disk, how to transform the sectors we read into a whole file we need?
+We use "Buffer".
+
+(6)Buffer（缓冲区）
+[1]Purpose: To synchronize (or to make compatible) different R/W mechanisms and rates. It is like a truck which loads all the materials needed and once it collects all of them, it will transport all of them to the CPU.
+
+[2]It is a temporary storage of data (usually as a step in transferring the data).
+
+6.Representing Text
+[1]ASCII: 7 bits (or 8 bits with a leading 0) (can be used to define 128 characters)
+
+[2]Unicode: 16 bits (some special characters like German characters: ö, ä, ü can be defined) [standard]
+
+[3]ISO standard: 32 bits (more special characters like Chinese/Japanese characters and so on can be defined)
+
+
+7.?How to use binary system to represent numbers?
+For example, we have a decimal number 901
+We look it in this way:
+9 		0 		1    --> Representation (Base 10 system)
+--------------------
+10^2 	10^1 	10^0 --> Position's quality
+That means decimal number 901 is 9*10^2+0*10^1+1*10^0 in decimal system.
+
+If we have a binary number 1011
+We look it in this way:
+1 		0 		1 		1    --> Representation (Base 10 system)
+--------------------------
+2^3 	2^2 	2^1 	2^0  --> Position's quality
+That means binary number 1011 is 1*2^3+0*2^2+1*2^1+1*2^0 in decimal system.
+
+8.From decimal to binary
+Keep dividing the number by 2 and record the remainders. Be careful about the order.
+
+For example, we have a binary number 11.
+		  Remainder
+2|	11
+ |_______
+ 2|	5  		 1 --> 1*2^0 	↑
+  |______					|
+  2| 2 		 1 --> 1*2^1 	|Pay attention to the direction of applying 2^n
+   |_____					|11 == 1*2^3+0*2^2+1*2^1+1*2^0
+   2| 1 	 0 --> 0*2^2 	|
+   	|____					|
+   	  0 	 1 --> 1*2^3 	|
+
+9.Representing Images
+[1]Pixel（像素）: picture element. (Using points to represent images, when you zoom in, the image might distort.)
+* If you zoom in an image and it will not distort, the technique of this is called "True Type"
+
+[2]Colors: RGB (mix Red, Green and Blue to represent colors), HSV, etc.
+
+[3]LCD, scanner, digital cameras, etc.
+
+
+
+
+
+
+
+
+
+
+Questions:
+1. ?What is "Flip-Flop"? And how is it used?
