@@ -1,0 +1,136 @@
+一、?How to represent the sound?
+
+The Storage of Sound Waves
+1.Sampling
+	(1)Sample Rate: The rate that you sample the sound, it is a number. (Unit: Hz == Hz times per second)
+
+	For example, the rate of sampling is 200 Hz, that means we sample 200 times per second.
+
+	(2)Bit Resolution
+	[1To represent the amplitude, we use the unit: ms.
+
+	[2]It means how many bits will the numbers (sample rate) produced in a second occupy.
+	* There is an accurate value for amplitude, we, however, cannot acquire it. The way we use is to use more bits to measure as close as possible to the accurate value.
+
+	(3)Bit Rate
+	[1]Bit Rate == Sample rate * Bit Resolution
+
+	[2]It means how much space does the sound doc use per second.
+
+	[3]Unit: bps
+
+	?What is "bps"?
+	For example, there exists "1600 bps" which stands for 1600 bit per second.
+
+	?What is "kps"?
+	"kps" stands for kilo bit per second.
+
+2.MIDI (synthesis)
+	* MIDI can only store sound that fits certain patterns; Sampling, however, can be used to store any sound.
+
+	For example, if you need to record the sound produced from a piano by MIDI, then the computer knows you need, for example, the "do" produced by a piano for some part of the sound, then it will play the corresponding sound at the right place.
+
+	(1)The sound produced by MINI totally depends on the quality of sound card. And by using MIDI, the same sound played on different computers will give you different effect.
+
+二、Binary System Revisited
+1.Addition
+	0 		0 		1 		1
++	0 	+	1 	+	0 	+	1
+------  ------  ------  ------
+	0 		1 		1 	   10
+
+2.Subtraction
+(1)?How to define Negative Numbers?
+	[1]Two's Complement (We have to sacrafice some space of 8 bits)
+	Originally, we can represent 0(0)~7(111) with 3 bits, but with Two's Complement, we can represent -4(100)~3(011) with 3 bits. Range:-2^(n-1) ~ 2^(n-1)-1, "n" is the number of bits.
+
+?How to complete this task?								What does it mean in 2's		What does it mean in Binary
+Take a look at the binary numbers below 0:		011 --> 3 								3
+We can see they are counted down from the 		010 --> 2 								2
+biggest binary that 3 bits can represent:		001 --> 1								1
+111 --> 110 --> 101 --> 100						000 --> 0 								0
+												--------------------------------------------------------------------
+												111 --> -1 								7
+												110 --> -2 								6
+												101 --> -3								5
+												100 --> -4 								4
+
+	<1>Advantages:
+	Firstly, we can determine whether this number is positive or negative just by looking at its first number in binary system, if it is "1", it is negative; otherwise, it is positve.
+
+	Secondly, we can just add them, and the result is always right.
+
+	For example, we want to know the result of "2-1".
+	We can express it as "2+(-1)", that is "010+111", which is 1001, we have only 3 bits, however, so the first "1" will be missed, and the result will be "001" or 1.
+	Another way to interpret is to use binary system to calculate, if so, the result will be "2+7" or 9, which is 1 (mod 8)
+
+	<2>Two's Complement Encoding
+	Method 1
+	Suppose we have 3 bits to represent "-2". We ignore the "-" and turn it into "2" which is represented by "010", then we start from right to left, if we encounter "0", we write "0"; if we encounter "1", we write "1" until we encounter a "1". After this "1", we turn every "0" into "1" and turn every "1" into "0".
+
+	Method 2
+	For positive x, when you want to represent x, use binary encoding of x; when you want to represent -x, use bianry encoding of (2^n-x).
+
+	For example, suppose we want to represent "-2". We can surely know that it is "6" as we can use "8" (3 bits --> 2^3).
+	So we have -2 --> 2^3+(-2) --> 6 --> 110.
+
+	[2]Excess
+			What does it mean in Bin 		What does it mean in Excess
+	----------------------------------------------------------------------------
+	000 	0 								-4
+	001 	1 								-3
+	010 	2 								-2
+	011 	3 								-1
+	100 	4 								0 (moved from above -- the Bin part)
+	101 	5 								1 (moved from above -- the Bin part)
+	110 	6 								2 (moved from above -- the Bin part)
+	111 	7 								3 (moved from above -- the Bin part)
+
+	<1>Advantages:
+	We do not need to redesign when we employ this in circuit that needs to compare the amount of electricity like "analog" (比较器电路) because the relative position of numbers remain the same.
+
+	* ?How to change from Excess into "3bits"?
+	For example, we have a number in Excess represented by "2", we can add it by 4 (2^(3-1)), and it becomes "6" (this is what the 3bits means in binary) and transform it into 3bits: 110.
+
+	* ?How to change from Excess into "nbits"?
+	We can add it by 2^(n-1), the other part remains the same.
+
+	(2)Overflow
+	<1>?What does "Overflow" mean?
+	For example, if we try to calculate "2+3" in 2's, it is: 010+011==101, check the table and we know that "2+3" is "-3" in 2's. But we know that "2+3" should be "5", but look back to the table we can find that "5" is not in the table. But 5==-3 (mod 8). For the same reason, "-2-3" == 3 == -5 (mod 8).
+
+	* However, if a positive number adds to a negative number, the result will not overflow as "overflow" only happens when the addends cannot be represented.
+
+三、How to represent decimal fraction
+1.Fixed-point
+	For example, we need to represent "12.34", that is: 1*10^1, 2*10^0, 3*10^(-1), 4*10^(-2)
+
+2.Floating-point
+It is like using scientific notation (科学计数法) to represent decimal fraction.
+
+	For example, we have a fraction in binary: 101.101, which equals to 4+1+1/2+1/8 in decimal.
+
+	* We can use 8 bits to represent a decimal fraction:
+	⭕|⭕⭕⭕|⭕⭕⭕⭕, among these digits, the 1st one is "sign" (1 == negative, 0 == positive); the 2nd to 4th are exponent (指数位 (b)：a*10^b); the leftmost 4 digits are mantissa (尾数 (a)：a*10^b).
+
+	Among these parts, we usually use "excess method" to represent "exponent" part; also, in floating-point pattern, the "." is between the exponet part and the mantissa part.
+
+	For example, we have a number in 8 bit like this: 11010101, we first converts it to be like this: (1)(101)(0101), then this 8-bit number means: (-)(+1)(.0101) == (-)(0*1/2+1*1/4+0*1/8+1*1/16)*2^(+1) == -5/8.
+
+四、The Number of Bit is not enough
+1.Truncation Error
+When we find that the precision of the decimal fraction is not enough, there is a problem called truncation error.
+
+	* ?How to convert a decimal fraction to a floating-point pattern?
+	For example, we have a decimal fraction 2+5/8, we convert it to 10.101000 (convert it to fixed-point pattern first), then move its decimal point to the forefront: 0.10101000, 
+	?????????????????
+
+五、Normalized Form
+1.The most significant bit of mantissa is 1.
+	* 0’s floating-point representation is all zero. (00000000 actually replaces 1*2^(-4))
+
+	* IEEE standard
+	The left-most bit in mantissa is always 1 --> omit it.
+	An IEEE standard normalized form is (s)(eee)(mmmm) --> (−1)^s*1.mmmm*2^(eee−4)
+	
+	For example, 01100011 --> (0)(110)(0011) --> 1.0011*2^(6−4)
